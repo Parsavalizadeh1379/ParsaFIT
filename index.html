@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101827">
+<meta name="description" content="برنامه تمرین خانگی ۵ روزه با دمبل">
+<link rel="manifest" href="manifest.webmanifest">
+<title>برنامه تمرین من</title>
+<style>
+:root{--bg:#0b1220;--panel:#121d30;--panel2:#1a2940;--text:#f3f6fb;--muted:#a9b7ca;--accent:#70d6b3;--line:#2b3b54;--warn:#ffd27a}
+*{box-sizing:border-box} body{margin:0;background:linear-gradient(160deg,#0b1220,#101b2d 60%,#0b1220);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;min-height:100vh}
+header{padding:calc(18px + env(safe-area-inset-top)) 18px 16px;position:sticky;top:0;background:#0b1220ee;backdrop-filter:blur(12px);z-index:5;border-bottom:1px solid var(--line)}
+h1{font-size:22px;margin:0 0 5px}.sub{color:var(--muted);font-size:13px}
+main{max-width:680px;margin:auto;padding:16px 14px 40px}
+.days{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:12px 0 16px}
+.day{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:13px;padding:10px 3px;font:inherit;font-size:12px;cursor:pointer}
+.day.active{background:var(--accent);color:#092018;border-color:var(--accent);font-weight:800}
+.day small{display:block;font-size:10px;margin-top:3px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+h2{font-size:18px;margin:0}.muted{color:var(--muted);font-size:13px}
+.progress{height:8px;background:#26364d;border-radius:20px;overflow:hidden;margin:12px 0 5px}.bar{height:100%;background:var(--accent);width:0%;transition:width .2s}
+.exercise{padding:15px 0;border-bottom:1px solid var(--line)}.exercise:last-child{border:0;padding-bottom:0}
+.ex-title{font-size:16px;font-weight:750}.detail{font-size:13px;color:var(--muted);margin-top:5px;line-height:1.8}
+.tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.tag{font-size:11px;background:var(--panel2);color:#dce7f6;padding:5px 9px;border-radius:20px}
+.controls{display:flex;align-items:center;gap:10px;margin-top:12px}.controls label{font-size:12px;color:var(--muted)}
+input[type=number]{width:72px;background:#0b1423;border:1px solid var(--line);color:white;border-radius:9px;padding:8px;font:inherit;text-align:center}
+.check{display:flex;align-items:center;gap:8px;margin-right:auto;color:var(--accent);font-size:13px;cursor:pointer}
+input[type=checkbox]{width:20px;height:20px;accent-color:#70d6b3}
+button{font:inherit}.nav{display:flex;gap:9px;margin-top:14px}.nav button,.reset{border:1px solid var(--line);border-radius:12px;padding:11px 14px;background:var(--panel2);color:var(--text);cursor:pointer}.nav .primary{background:var(--accent);color:#092018;border-color:var(--accent);font-weight:800;flex:1}
+.rest{background:#17243a;border:1px dashed #536783;border-radius:14px;padding:16px;line-height:1.9;color:#d8e4f3}
+.notice{font-size:12px;line-height:1.9;color:var(--muted)}.section-title{margin:22px 2px 8px;font-size:15px}
+footer{color:var(--muted);font-size:11px;text-align:center;padding:18px}
+@media(min-width:600px){main{padding-top:24px}.days{gap:10px}.day{font-size:14px}}
+</style>
+</head>
+<body>
+<header><h1>برنامه تمرین من</h1><div class="sub">برنامه خانگی ۵ روزه · دمبل قابل تنظیم · دوره ۱۲ هفته‌ای</div></header>
+<main>
+<div class="days" id="days"></div>
+<section class="card">
+ <div class="row"><div><h2 id="dayTitle">شنبه · سینه، سرشانه و پشت بازو</h2><div class="muted" id="dayMeta">جلسه تمرین</div></div><button class="reset" id="resetDay">پاک‌کردن تیک‌ها</button></div>
+ <div class="progress"><div class="bar" id="bar"></div></div><div class="muted" id="progressText">۰ از ۰ حرکت انجام شده</div>
+</section>
+<div id="content"></div>
+<div class="nav"><button id="prev">قبلی</button><button class="primary" id="next">حرکت بعدی</button></div>
+<h3 class="section-title">راهنمای اجرای برنامه</h3>
+<section class="card notice">
+<ul>
+<li>هفته‌های ۱ و ۲: از هر حرکت ۲ ست انجام بده. از هفته ۳ به بعد، تعداد ست نوشته‌شده را اجرا کن.</li>
+<li>وزنه را طوری انتخاب کن که فرم حرکت درست بماند و در پایان هر ست حدود ۲ تا ۳ تکرار دیگر توان داشته باشی. اگر فرم خراب شد، وزنه را کم کن.</li>
+<li>بین ست‌ها ۶۰ تا ۹۰ ثانیه و بین حرکات در صورت نیاز ۱ تا ۲ دقیقه استراحت کن.</li>
+<li>قبل از تمرین ۵ تا ۷ دقیقه گرم‌کردن سبک انجام بده. حرکات را کنترل‌شده و بدون درد اجرا کن.</li>
+<li>برای پیشرفت، وقتی همه ست‌ها را با فرم خوب و به‌راحتی به سقف تکرار رساندی، کمی وزنه اضافه کن؛ اگر دمبل به سقف ۱۰ کیلو رسید، آهسته‌تر پایین بیاور یا تکرار را بیشتر کن.</li>
+</ul>
+<div><b>هدف‌های کمکی:</b> پروتئین روزانه حدود ۱۳۰ تا ۱۶۵ گرم، خواب ۷ تا ۹ ساعت و پیاده‌روی روزانه حدود ۷۰۰۰ تا ۹۰۰۰ قدم. کاهش وزن آرام حدود ۲۰۰ تا ۴۰۰ گرم در هفته هدف معقولی است، نه تضمین.</div>
+</section>
+<footer>پیشرفت و تیک‌ها روی همین دستگاه ذخیره می‌شوند.</footer>
+</main>
+<script>
+const days=[
+{name:"شنبه",title:"سینه، سرشانه و پشت بازو",meta:"قدرتی · بالاتنه",items:[
+["پرس سینه دمبل روی زمین","۳ ست × ۸ تا ۱۲ تکرار","هر دست ۴ تا ۸ کیلو","روی زمین دراز بکش؛ آرنج‌ها را کنترل‌شده پایین بیاور و دمبل‌ها را بالا ببر."],
+["شنا روی زانو یا شنا به دیوار","۳ × ۶ تا ۱۲","وزن بدن","بدن را یک‌تکه نگه دار؛ نوعی را انتخاب کن که فرم درست حفظ شود."],
+["پرس سرشانه دمبل نشسته روی زمین","۳ × ۸ تا ۱۲","هر دست ۲ تا ۵ کیلو","شکم را سفت نگه دار و دمبل‌ها را بدون قوس‌دادن کمر بالای سر ببر."],
+["نشر جانب","۲ × ۱۲ تا ۱۵","هر دست ۱ تا ۳ کیلو","آرنج کمی خم؛ تا حدود ارتفاع شانه بالا بیاور و تاب نده."],
+["پشت بازو دمبل بالای سر","۲ × ۱۰ تا ۱۲","یک دمبل ۳ تا ۶ کیلو","آرنج‌ها رو به جلو بمانند؛ فقط ساعدها حرکت کنند."]]},
+{name:"یکشنبه",title:"پا و شکم",meta:"قدرتی · پایین‌تنه",items:[
+["اسکوات جام","۳ × ۱۰ تا ۱۵","یک دمبل ۶ تا ۱۰ کیلو","دمبل نزدیک سینه؛ زانوها هم‌جهت پنجه پا و پاشنه‌ها روی زمین."],
+["ددلیفت رومانیایی دمبل","۳ × ۱۰ تا ۱۲","هر دست ۴ تا ۱۰ کیلو","لگن را عقب بده، کمر خنثی و دمبل‌ها نزدیک پاها حرکت کنند."],
+["لانج معکوس","۲ × ۸ تا ۱۰ هر پا","بدون وزنه یا هر دست ۲ تا ۵ کیلو","قدم به عقب؛ تعادل و کنترل را در اولویت بگذار."],
+["ساق پا ایستاده","۳ × ۱۲ تا ۲۰","بدون وزنه یا دمبل سبک","پاشنه را بالا ببر، مکث کوتاه و آهسته پایین بیا."],
+["ددباگ","۳ × ۸ تا ۱۰ هر سمت","وزن بدن","کمر را به زمین نزدیک نگه دار و دست و پای مخالف را دراز کن."],
+["پلانک","۳ × ۲۰ تا ۴۰ ثانیه","وزن بدن","شکم و باسن را منقبض کن؛ کمر را گود نکن."]]},
+{name:"دوشنبه",title:"پشت و جلو بازو",meta:"قدرتی · بالاتنه",items:[
+["زیربغل تک‌دست با دمبل","۳ × ۱۰ تا ۱۲ هر دست","۴ تا ۱۰ کیلو","دست آزاد را روی ران تکیه بده؛ دمبل را به سمت لگن بکش."],
+["زیربغل خم دمبل","۳ × ۱۰ تا ۱۲","هر دست ۳ تا ۸ کیلو","بالاتنه را از لگن خم کن و کمر را صاف نگه دار."],
+["نشر خم","۲ × ۱۲ تا ۱۵","هر دست ۱ تا ۳ کیلو","برای پشت شانه؛ وزنه سبک و حرکت کنترل‌شده."],
+["جلو بازو دمبل","۳ × ۱۰ تا ۱۲","هر دست ۲ تا ۵ کیلو","آرنج کنار بدن ثابت؛ از تاب‌دادن تنه خودداری کن."],
+["جلو بازو چکشی","۲ × ۱۰ تا ۱۲","هر دست ۲ تا ۵ کیلو","کف دست‌ها رو به هم؛ مچ را صاف نگه دار."]]},
+{name:"سه‌شنبه",title:"هوازی و شکم",meta:"سبک تا متوسط · ریکاوری فعال",items:[
+["پیاده‌روی تند درجا یا بیرون","۲۰ تا ۳۰ دقیقه","شدت متوسط","باید بتوانی جمله کوتاه بگویی؛ اگر تازه‌کاری از ۱۵ دقیقه شروع کن."],
+["کرانچ معکوس","۳ × ۱۰ تا ۱۵","وزن بدن","زانوها را با کنترل به سمت سینه جمع کن؛ از تاب‌دادن پاها پرهیز کن."],
+["برد داگ","۳ × ۸ تا ۱۰ هر سمت","وزن بدن","دست و پای مخالف را دراز کن؛ لگن نچرخد."],
+["پلانک بغل","۲ × ۱۵ تا ۳۰ ثانیه هر سمت","وزن بدن","از زانو شروع کن اگر نگه‌داشتن فرم کامل سخت است."]]},
+{name:"چهارشنبه",title:"کل بدن با تأکید بالاتنه",meta:"قدرتی · ترکیبی",items:[
+["اسکوات جام","۳ × ۱۰ تا ۱۲","یک دمبل ۵ تا ۱۰ کیلو","دامنه‌ای را انتخاب کن که کمر و زانو راحت باشند."],
+["پرس سینه دمبل روی زمین","۳ × ۱۰ تا ۱۲","هر دست ۳ تا ۸ کیلو","پایین‌رفتن آهسته و کنترل‌شده."],
+["زیربغل تک‌دست با دمبل","۳ × ۱۰ هر دست","۴ تا ۱۰ کیلو","آرنج را به سمت لگن بکش."],
+["پرس سرشانه دمبل نشسته","۲ × ۱۰","هر دست ۲ تا ۵ کیلو","شکم سفت و بدون قوس کمر."],
+["ددلیفت رومانیایی","۲ × ۱۲","هر دست ۴ تا ۸ کیلو","کشش پشت ران را حس کن؛ حرکت از مفصل لگن باشد."]]},
+{name:"پنجشنبه",title:"استراحت",meta:"ریکاوری",rest:"استراحت کن یا ۲۰ تا ۳۰ دقیقه پیاده‌روی آرام داشته باش. اگر بدن‌درد شدید یا خستگی داری، فقط ریکاوری کن."},
+{name:"جمعه",title:"استراحت",meta:"ریکاوری",rest:"استراحت کامل یا فعالیت سبک اختیاری. برای هفته بعد آماده شو."}
+];
+let selected=0, current=0;
+const fa=n=>new Intl.NumberFormat('fa-IR').format(n);
+const key=(d,i)=>`done-${d}-${i}`;
+function renderDays(){document.getElementById('days').innerHTML=days.map((d,i)=>`<button class="day ${i===selected?'active':''}" data-day="${i}">${d.name}<small>${i<5?'تمرین':'استراحت'}</small></button>`).join('');document.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{selected=+b.dataset.day;current=0;render()})}
+function render(){
+ renderDays();const d=days[selected];document.getElementById('dayTitle').textContent=d.name+' · '+d.title;document.getElementById('dayMeta').textContent=d.meta;
+ const content=document.getElementById('content');
+ if(d.rest){content.innerHTML=`<div class="rest">${d.rest}</div>`;document.getElementById('bar').style.width='0%';document.getElementById('progressText').textContent='روز استراحت';document.getElementById('prev').disabled=true;document.getElementById('next').disabled=true;return}
+ document.getElementById('prev').disabled=false;document.getElementById('next').disabled=false;
+ let done=d.items.filter((x,i)=>localStorage.getItem(key(selected,i))==='1').length;
+ document.getElementById('bar').style.width=(done/d.items.length*100)+'%';document.getElementById('progressText').textContent=`${fa(done)} از ${fa(d.items.length)} حرکت انجام شده`;
+ content.innerHTML=d.items.map((x,i)=>`<article class="card exercise" id="ex-${i}"><div class="row"><div class="ex-title">${fa(i+1)}. ${x[0]}</div><label class="check"><input type="checkbox" data-check="${i}" ${localStorage.getItem(key(selected,i))==='1'?'checked':''}> انجام شد</label></div><div class="detail">${x[3]}</div><div class="tags"><span class="tag">${x[1]}</span><span class="tag">وزنه پیشنهادی: ${x[2]}</span></div><div class="controls"><label>وزنه‌ای که استفاده کردم</label><input type="text" placeholder="مثلاً ۵ کیلو" aria-label="وزنه استفاده شده" data-weight="${i}" value="${localStorage.getItem('weight-'+selected+'-'+i)||''}"></div></article>`).join('');
+ document.querySelectorAll('[data-check]').forEach(c=>c.onchange=()=>{localStorage.setItem(key(selected,+c.dataset.check),c.checked?'1':'0');render()});
+ document.querySelectorAll('[data-weight]').forEach(inp=>inp.onchange=()=>localStorage.setItem('weight-'+selected+'-'+inp.dataset.weight,inp.value));
+}
+document.getElementById('prev').onclick=()=>{if(!days[selected].items)return;current=Math.max(0,current-1);document.getElementById('ex-'+current)?.scrollIntoView({behavior:'smooth',block:'center'})};
+document.getElementById('next').onclick=()=>{if(!days[selected].items)return;current=Math.min(days[selected].items.length-1,current+1);document.getElementById('ex-'+current)?.scrollIntoView({behavior:'smooth',block:'center'})};
+document.getElementById('resetDay').onclick=()=>{if(!days[selected].items)return;if(confirm('تیک‌های این روز پاک شوند؟')){days[selected].items.forEach((x,i)=>localStorage.removeItem(key(selected,i)));render()}};
+render();
+if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>

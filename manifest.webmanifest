@@ -1,0 +1,10 @@
+{
+  "name": "برنامه تمرین من",
+  "short_name": "تمرین من",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b1220",
+  "theme_color": "#101827"
+}
